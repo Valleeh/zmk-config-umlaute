@@ -1,0 +1,19 @@
+/* German umlauts */
+ZMK_UNICODE_PAIR(   de_ae,      KP_N0, KP_N2, KP_N2, KP_N8,    KP_N0, KP_N1,  KP_N9, KP_N6)
+ZMK_UNICODE_PAIR(   de_oe,      KP_N0, KP_N2, KP_N4, KP_N6,    KP_N0, KP_N2,  KP_N1, KP_N4)
+ZMK_UNICODE_PAIR(   de_ue,      KP_N0, KP_N2, KP_N5, KP_N2,    KP_N0, KP_N2,  KP_N2, KP_N0)
+ZMK_UNICODE_SINGLE( de_eszett,  KP_N0, KP_N2,  KP_N2,  KP_N3)
+
+/* Description	Symbol	Alt Codes */
+/* A umlaut – Uppercase	Ä	Alt 0196 */
+/* a umlaut – Lowercase	ä	Alt 0228 */
+/* E umlaut – Uppercase	Ë	Alt 0203 */
+/* e umlaut – Lowercase	ë	Alt 0235 */
+/* I umlaut – Uppercase	Ï	Alt 0207 */
+/* i umlaut – Lowercase	ï	Alt 0239 */
+/* O umlaut – Uppercase	Ö	Alt 0214 */
+/* o umlaut – Lowercase	ö	Alt 0246 */
+/* U umlaut – Uppercase	Ü	Alt 0220 */
+/* u umlaut – Lowercase	ü	Alt 0252 */
+/* Y umlaut – Uppercase	Ÿ	Alt 0159 */
+/* y umlaut – Lowercase	ÿ	Alt 0255 */

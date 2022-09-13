@@ -1,0 +1,204 @@
+/*
+ * Copyright (c) 2020 The ZMK Contributors
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+#define HOST_OS 2
+#include <behaviors.dtsi>
+#include <dt-bindings/zmk/keys.h>
+#include <dt-bindings/zmk/bt.h>
+#include <dt-bindings/zmk/ext_power.h>
+#include "../helper.h"
+#include <dt-bindings/zmk/bt.h>
+#include "../international_chars/german.dtsi"
+#define HYP LS(LC(LA(LGUI)))
+#define MEH LS(LC(LALT))
+#define HYPER(key) LS(LC(LA(LG(key))))
+
+// Friendlier volume definitions, tap volume down, hold mute
+#define VOLUME_DOWN K_MUTE C_VOLUME_DOWN
+#define VOLUME_UP C_VOLUME_UP
+#define TAPPING_TERM 400
+#define COMBO_TIMEOUT 40
+
+&kscan0 {
+    debounce-press-ms = <10>;
+    debounce-release-ms = <10>;
+};
+
+&mt {
+    tapping-term-ms = <TAPPING_TERM>;
+    flavor = "tap-preferred";
+};
+/ {
+      behaviors {
+                dae: dae-tap-macro {
+                        compatible = "zmk,behavior-hold-tap";
+                        label = "dae-TAP-MACRO";
+                        #binding-cells = <2>;
+                        tapping-term-ms = <210>;
+                        quick-tap-ms = <0>;
+                        flavor = "tap-preferred";
+                        bindings =  <&de_ae>,<&kp>;
+                };
+                doe: doe-tap-macro {
+                        compatible = "zmk,behavior-hold-tap";
+                        label = "doe-TAP-MACRO";
+                        #binding-cells = <2>;
+                        tapping-term-ms = <210>;
+                        quick-tap-ms = <0>;
+                        flavor = "tap-preferred";
+                        bindings =  <&de_oe>,<&kp>;
+                };
+                due: due-tap-macro {
+                        compatible = "zmk,behavior-hold-tap";
+                        label = "due-TAP-MACRO";
+                        #binding-cells = <2>;
+                        tapping-term-ms = <210>;
+                        quick-tap-ms = <0>;
+                        flavor = "tap-preferred";
+                        bindings =  <&de_ue>,<&kp>;
+                };
+                dsz: dsz-tap-macro {
+                        compatible = "zmk,behavior-hold-tap";
+                        label = "dsz-TAP-MACRO";
+                        #binding-cells = <2>;
+                        tapping-term-ms = <210>;
+                        quick-tap-ms = <0>;
+                        flavor = "tap-preferred";
+                        bindings =  <&de_eszett>,<&kp>;
+                };};
+};
+/ {
+	keymap {
+		compatible = "zmk,keymap";
+
+		default_layer {
+// ------------------------------------------------------------------------------------------------------------
+// |  ESC  |  1  |  2  |  3   |  4   |  5   |                   |  6   |  7    |  8    |  9   |   0   |   `   |
+// |  TAB  |  Q  |  W  |  E   |  R   |  T   |                   |  Y   |  U    |  I    |  O   |   P   |   -   |
+// |  CTRL |  A  |  S  |  D   |  F   |  G   |                   |  H   |  J    |  K    |  L   |   ;   |   '   |
+// | SHIFT |  Z  |  X  |  C   |  V   |  B   |   "["  |  |  "]"  |  N   |  M    |  ,    |  .   |   /   | SHIFT |
+//                     | ALT  | GUI  | LOWER|  SPACE |  | ENTER | RAISE| BSPC  | GUI   |
+			bindings = <
+&kp ESC       &kp N1       &kp N2       &kp N3      &kp N4      &kp N5                  &kp N6 &kp N7   &kp N8    &kp N9  &kp N0   &dsz 0 GRAVE
+&mt HYP TAB   &kp Q        &kp W        &kp E       &kp R       &kp T                   &kp Y  &kp U    &kp I     &kp O   &kp P    &due 0 MINUS 
+&kp LCTRL     &kp A        &kp S        &kp D       &kp F       &kp G                   &kp H  &kp J    &kp K     &kp L   &doe 0 SEMI  &dae 0 SQT 
+&kp LSHFT     &mt LC(Z) Z  &mt LC(X) X  &mt LC(C) C &mt LC(V) V &kp B  &mo 6   &mo 5 &kp N  &kp M    &kp COMMA &kp DOT &kp FSLH &mt MEH RET
+                           &kp LGUI &kp LALT &sl 1  &kp BSPC                      &mt HYP SPACE  &mo 2  &mo 3 &mo 4
+			>;
+
+			sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN>;
+		};
+
+		symbol_layer {
+// ------------------------------------------------------------------------------------------------------------
+// | BTCLR | BT1 | BT2 |  BT3 |  BT4 |  BT5 |                   |      |       |       |      |       |       |
+// |  F1   |  F2 |  F3 |  F4  |  F5  |  F6  |                   |  F7  |  F8   |  F9   |  F10 |  F11  |  F12  |
+// |   `   |  !  |  @  |  #   |  $   |  %   |                   |  ^   |  &    |  *    |  (   |   )   |   ~   |
+// |       |     |     |      |      |      |        |  |       |      |  _    |  +    |  {   |   }   |  "|"  |
+//                     |      |      |      |        |  |       |      |       |       |
+			bindings = <
+/* &bt BT_CLR &bt BT_SEL 0     &bt BT_SEL 1      &bt BT_SEL 2      &bt BT_SEL 3 &bt BT_SEL 4                 &trans    &trans    &trans          &trans    &trans    &trans */
+/* &kp F1     &kp F2           &kp F3            &kp F4            &kp F5       &kp F6                       &kp F7    &kp F8    &kp F9          &kp F10   &kp F11   &kp F12 */
+/* &kp GRAVE  &kp EXCL         &kp AT            &kp HASH          &kp DOLLAR   &kp PRCNT                    &kp CARET &kp AMPS  &kp KP_MULTIPLY &kp LPAR  &kp RPAR  &kp TILDE */
+/* &trans     &ext_power EP_ON &ext_power EP_OFF &ext_power EP_TOG &trans       &trans    &trans   &trans    &trans    &kp MINUS &kp KP_PLUS     &kp LBRC  &kp RBRC  &kp PIPE */
+/*                                               &rgb_ug RGB_TOG            &trans       &trans    &trans   &trans    &trans    &trans    &trans */
+&to 0 &kp F1 &kp F2 &kp F3 &kp F4 &kp F5                  &kp F6   &kp F7   &kp F8      &kp F9    &kp F10  &kp F11
+&trans &trans &trans &trans &trans &trans                 &kp LBKT &kp RBKT &kp EQUAL   &kp F10   &kp F11  &kp F12
+&trans &trans &trans &trans &trans &trans                 &kp LPAR &kp RPAR &kp MINUS   &kp SLASH &kp HASH &kp TILDE
+&trans &trans &trans &trans &trans &trans &trans   &trans &kp LBRC &kp RBRC &kp KP_PLUS &kp BSLH  &kp AMPS  &kp PIPE 
+      &trans       &trans       &trans    &trans   &trans    &trans    &trans    &trans
+			>;
+
+			sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN>;
+		};
+
+		move_layer {
+// ------------------------------------------------------------------------------------------------------------
+// |       |     |     |      |      |      |                   |      |       |       |      |       |       |
+// |   `   |  1  |  2  |  3   |  4   |  5   |                   |  6   |   7   |   8   |  9   |   0   |       |
+// |   F1  |  F2 |  F3 |  F4  |  F5  |  F6  |                   |      |   <-  |   v   |  ^   |  ->   |       |
+// |   F7  |  F8 |  F9 |  F10 |  F11 |  F12 |        |  |       |  +   |   -   |   =   |  [   |   ]   |   \   |
+//                     |      |      |      |        |  |       |      |       |       |
+			bindings = <
+&trans  &trans  &trans  &trans  &trans  &trans                       &trans      &trans       &trans    &trans    &trans    &trans
+&trans  &trans  &trans  &trans  &trans  &trans                        &kp HOME    &kp PG_DN  &kp PG_UP &kp END   &kp INS    &trans
+&trans  &trans  &trans  &trans  &trans  &trans                       &kp LEFT    &kp DOWN     &kp UP    &kp RIGHT &kp DEL    &trans
+&trans  &trans  &trans  &trans  &trans  &trans    &trans   &trans    &kp KP_PLUS &kp MINUS    &kp LC(LBKT) &kp LC(RBKT)  &kp RBKT  &kp BSLH
+                        &trans  &trans  &trans    &trans   &trans    &trans      &trans       &trans
+			>;
+
+			sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN>;
+		};
+		debug_layer {
+// ------------------------------------------------------------------------------------------------------------
+// |       |     |     |      |      |      |                   |      |       |       |      |       |       |
+// |   `   |  1  |  2  |  3   |  4   |  5   |                   |  6   |   7   |   8   |  9   |   0   |       |
+// |   F1  |  F2 |  F3 |  F4  |  F5  |  F6  |                   |      |   <-  |   v   |  ^   |  ->   |       |
+// |   F7  |  F8 |  F9 |  F10 |  F11 |  F12 |        |  |       |  +   |   -   |   =   |  [   |   ]   |   \   |
+//                     |      |      |      |        |  |       |      |       |       |
+			bindings = <
+&trans    &kp F21 &kp F22 &kp F23  &kp F24  &kp F24                      &kp F7 &kp F8 &kp F9    &kp F17 &kp F18 &kp F19
+&trans    &kp F15 &kp F16 &kp F17  &kp F18  &kp F19                      &kp F4 &kp F5 &kp F6    &kp F14 &kp F15 &kp F16
+&trans    &kp F5  &kp F6  &kp F10   &kp F11   &kp LS(F11)                &kp F1 &kp F2 &kp F3    &kp F11 &kp F12 &kp F13
+&trans    &kp F8  &kp F9  &kp F10  &kp F11  &kp F12   &trans   &trans    &trans &trans &trans    &kp N0  &kp DOT  &trans
+                        &trans  &trans  &trans    &trans   &trans    &trans    &trans       &trans
+			>;
+
+			sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN>;
+		};
+		num_layer {
+// ------------------------------------------------------------------------------------------------------------
+// |       |     |     |      |      |      |                   |      |       |       |      |       |       |
+// |   `   |  1  |  2  |  3   |  4   |  5   |                   |  6   |   7   |   8   |  9   |   0   |       |
+// |   F1  |  F2 |  F3 |  F4  |  F5  |  F6  |                   |      |   <-  |   v   |  ^   |  ->   |       |
+// |   F7  |  F8 |  F9 |  F10 |  F11 |  F12 |        |  |       |  +   |   -   |   =   |  [   |   ]   |   \   |
+//                     |      |      |      |        |  |       |      |       |       |
+			bindings = <
+&bt BT_CLR    &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4                       &trans    &trans       &trans    &kp N7 &kp N8 &kp N9
+&trans &kp N1 &kp N2 &kp N3  &kp N4  &kp N5                       &trans    &trans  &trans &kp N4 &kp N5 &kp N6
+&trans    &kp F2 &kp F3 &kp F4  &kp F5  &kp F6                       &trans    &trans     &trans    &kp N1 &kp N2 &kp N3
+&trans    &kp F8 &kp F9 &kp F10 &kp F11 &kp F12   &trans   &trans    &trans       &trans    &trans &kp N0  &kp COMMA  &trans
+                        &trans  &trans  &trans    &trans   &trans    &trans    &trans       &trans
+			>;
+
+			sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN>;
+		};
+		/* rgb_layer { */
+/* // ------------------------------------------------------------------------------------------------------------ */
+/* // |       |     |     |      |      |      |                   |      |       |       |      |       |       | */
+/* // |   `   |  1  |  2  |  3   |  4   |  5   |                   |  6   |   7   |   8   |  9   |   0   |       | */
+/* // |   F1  |  F2 |  F3 |  F4  |  F5  |  F6  |                   |      |   <-  |   v   |  ^   |  ->   |       | */
+/* // |   F7  |  F8 |  F9 |  F10 |  F11 |  F12 |        |  |       |  +   |   -   |   =   |  [   |   ]   |   \   | */
+/* //                     |      |      |      |        |  |       |      |       |       | */
+		/* 	bindings = < */
+/* &bt BT_CLR      &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4                       &trans    &trans       &trans    &kp N7 &kp N8 &kp N9 */
+/* &rgb_ug RGB_TOG &rgb_ug RGB_HUD  &rgb_ug RGB_BRI  &rgb_ug RGB_HUI &rgb_ug RGB_TOG  &rgb_ug RGB_TOG                      &trans    &trans  &trans &kp N4 &kp N5 &kp N6 */
+/* &trans          &rgb_ug RGB_SAD &rgb_ug RGB_BRD &rgb_ug RGB_SAI  &rgb_ug RGB_TOG  &rgb_ug RGB_TOG                       &trans    &trans     &trans    &kp N1 &kp N2 &kp N3 */
+/* &trans          &rgb_ug RGB_SPD &rgb_ug RGB_SPI &rgb_ug RGB_EFF &rgb_ug RGB_EFR &rgb_ug RGB_TOG   &trans   &trans    &ue       &ue2    &trans &kp N0  &kp DOT  &trans */
+                        /* &trans  &trans  &trans    &trans   &trans    &trans    &trans       &trans */
+		/* 	>; */
+
+		/* 	sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN>; */
+		/* }; */
+		misc_layer {
+// ------------------------------------------------------------------------------------------------------------
+// |       |     |     |      |      |      |                   |      |       |       |      |       |       |
+// |   `   |  1  |  2  |  3   |  4   |  5   |                   |  6   |   7   |   8   |  9   |   0   |       |
+// |   F1  |  F2 |  F3 |  F4  |  F5  |  F6  |                   |      |   <-  |   v   |  ^   |  ->   |       |
+// |   F7  |  F8 |  F9 |  F10 |  F11 |  F12 |        |  |       |  +   |   -   |   =   |  [   |   ]   |   \   |
+//                     |      |      |      |        |  |       |      |       |       |
+			bindings = <
+&bt BT_CLR    &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4                       &trans    &trans       &trans    &kp N7 &kp N8 &kp N9
+&kp GRAVE &kp N1 &kp N2 &kp N3  &kp N4  &kp N5                       &trans    &trans  &trans &kp N4 &kp N5 &kp N6
+&kp F1    &kp F2 &kp F3 &kp F4  &kp F5  &kp F6                       &trans    &trans     &trans    &kp N1 &kp N2 &kp N3
+&kp F7    &kp F8 &kp F9 &kp F10 &kp F11 &kp F12   &trans   &trans    &ue       &ue2    &trans &kp N0  &kp DOT  &trans
+                        &trans  &trans  &trans    &trans   &trans    &trans    &trans       &trans
+			>;
+
+			sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN>;
+		};
+	};
+};
